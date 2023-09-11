@@ -5,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uilearning_app/app_blocs.dart';
 import 'package:uilearning_app/app_events.dart';
 import 'package:uilearning_app/app_states.dart';
-import 'package:uilearning_app/pages/sign_in/bloc/sign_in_blocs.dart';
+import 'package:uilearning_app/common/values/app_colors.dart';
+import 'package:uilearning_app/pages/bloc_providers.dart';
+import 'package:uilearning_app/pages/register/register.dart';
 import 'package:uilearning_app/pages/sign_in/sign_in.dart';
-import 'package:uilearning_app/pages/welcome/bloc/welcome_blocs.dart';
 import 'package:uilearning_app/pages/welcome/welcome.dart';
 
 Future<void> main() async {
@@ -24,27 +25,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => WelcomeBloc(),
-          ),
-          BlocProvider(
-            create: (context) => AppBlocs(),
-          ),
-          BlocProvider(
-            create: (context) => SignInBloc(),
-          ),
-        ],
+        providers: AppBlocProviders.allBlockProviders,
         child: ScreenUtilInit(
           builder: (context, child) => MaterialApp(
             theme: ThemeData(
-              appBarTheme: const AppBarTheme(color: Colors.white, elevation: 0),
+              appBarTheme: const AppBarTheme(
+                  color: Colors.white, elevation: 0, iconTheme: IconThemeData(color: AppColors.primaryText)),
             ),
             debugShowCheckedModeBanner: false,
             home: const Welcome(),
             routes: {
               "myHomePage": (context) => const MyHomePage(),
               "signIn": (context) => const SignIn(),
+              "register": (context) => const Register()
             },
           ),
         ));
@@ -82,15 +75,13 @@ class MyHomePage extends StatelessWidget {
           children: [
             FloatingActionButton(
               heroTag: "HeroTag1",
-              onPressed: () =>
-                  BlocProvider.of<AppBlocs>(context).add(Increment()),
+              onPressed: () => BlocProvider.of<AppBlocs>(context).add(Increment()),
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
             FloatingActionButton(
               heroTag: "HeroTag2",
-              onPressed: () =>
-                  BlocProvider.of<AppBlocs>(context).add(Decrement()),
+              onPressed: () => BlocProvider.of<AppBlocs>(context).add(Decrement()),
               tooltip: 'Decrement',
               child: const Icon(Icons.remove),
             ),
