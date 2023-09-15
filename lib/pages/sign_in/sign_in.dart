@@ -30,7 +30,8 @@ class _SignInState extends State<SignIn> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     buildThirdPartyLogin(context),
-                    Center(child: reusableText("Or use your email account login")),
+                    Center(
+                        child: reusableText("Or use your email account login")),
                     Container(
                       margin: EdgeInsets.only(top: 36.h),
                       padding: EdgeInsets.only(left: 25.w, right: 25.w),
@@ -41,22 +42,30 @@ class _SignInState extends State<SignIn> {
                           SizedBox(
                             height: 5.h,
                           ),
-                          buildTextField("Enter your email adress.", "email", "user", (value) {
+                          buildTextField(
+                              "Enter your email adress.", "email", "user",
+                              (value) {
                             context.read<SignInBloc>().add(EmailEvents(value));
                           }),
                           reusableText("Password"),
                           SizedBox(
                             height: 5.h,
                           ),
-                          buildTextField("Enter your password.", "password", "lock", (value) {
-                            context.read<SignInBloc>().add(PasswordEvents(value));
+                          buildTextField(
+                              "Enter your password.", "password", "lock",
+                              (value) {
+                            context
+                                .read<SignInBloc>()
+                                .add(PasswordEvents(value));
                           }),
                           forgotPassword(),
                           buildLogInAndRegisterButton("Login", "login", () {
-                            SignInController(context: context).handleSignIn("email");
+                            SignInController(context: context)
+                                .handleSignIn("email");
                           }),
-                          buildLogInAndRegisterButton("Sign Up", "register", () {
-                            Navigator.of(context).pushNamed("register");
+                          buildLogInAndRegisterButton("Sign Up", "register",
+                              () {
+                            Navigator.of(context).pushNamed("/register");
                           })
                         ],
                       ),
