@@ -1,14 +1,12 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uilearning_app/common/routes/pages.dart';
 import 'package:uilearning_app/common/values/app_colors.dart';
+import 'package:uilearning_app/global.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp();
+  await Global.init();
   runApp(const MyApp());
 }
 

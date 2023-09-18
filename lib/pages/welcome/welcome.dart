@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uilearning_app/common/values/app_colors.dart';
+import 'package:uilearning_app/common/values/constant.dart';
+import 'package:uilearning_app/global.dart';
 import 'package:uilearning_app/pages/welcome/bloc/welcome_blocs.dart';
 import 'package:uilearning_app/pages/welcome/bloc/welcome_events.dart';
 import 'package:uilearning_app/pages/welcome/bloc/welcome_states.dart';
@@ -125,6 +127,12 @@ class _WelcomeState extends State<Welcome> {
               // Navigator.of(context).push(MaterialPageRoute(
               //   builder: (context) => const MyHomePage(),
               // ));
+
+              //ilk kez açılıyor cihaz.
+              Global.storageService
+                  .setBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_TIME, true);
+              print(
+                  "The value is ${Global.storageService.getDeviceFirstOpen()}");
               //bu navigasyonda ilgili page'e gittiğinde öncekiler silinir ve geri dönülemez.
               Navigator.of(context)
                   .pushNamedAndRemoveUntil("/sign_in", (route) => false);

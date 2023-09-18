@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uilearning_app/common/routes/names.dart';
+import 'package:uilearning_app/global.dart';
 import 'package:uilearning_app/pages/application/application_page.dart';
 import 'package:uilearning_app/pages/application/bloc/application_blocs.dart';
 
@@ -54,7 +55,17 @@ class AppPages {
       //Navigatorda belirttiğimiz route isimleri ile yukarıdaki pageentity route isimlerini karşılaştırıyoruz. Eşleşenleri alıyoruz.
       var result = routes().where((element) => element.route == settings.name);
       if (result.isNotEmpty) {
-        print("valid route name ${settings.name}");
+        bool deviceFirstOpen = Global.storageService.getDeviceFirstOpen();
+        if (result.first.route == AppRoutes.INITIAL && deviceFirstOpen) {
+          bool isLoggedIn = Global.storageService.getIsLoggedIn();
+          if (isLoggedIn) {
+            return MaterialPageRoute(
+                builder: (_) => const ApplicationPage(), settings: settings);
+          }
+
+          return MaterialPageRoute(
+              builder: (_) => const SignIn(), settings: settings);
+        }
         return MaterialPageRoute(
             builder: (_) => result.first.page, settings: settings);
       }
